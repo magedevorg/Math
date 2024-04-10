@@ -109,12 +109,24 @@ public:
 class MVector3
 {
 public:
+    static const MVector3 Zero;
+
+
+public:
     MVector3(){}
     MVector3(MFLOAT inX, MFLOAT inY, MFLOAT inZ) 
         : X(inX), Y(inY), Z(inZ)
     {}
 
 public:
+    void Set(MFLOAT inX, MFLOAT inY, MFLOAT inZ)
+    {
+        X = inX;
+        Y = inY;
+        Z = inZ;
+    }
+
+
     // 외적
     static MVector3 CrossProduct(MVector3 inA, MVector3 inB)
     {
@@ -141,11 +153,11 @@ public:
 	//---------------------------------------------------------
    // 연산자 오버로딩
    //---------------------------------------------------------
-    MVector3 operator-(const MVector3& inOther) {
+    MVector3 operator-(const MVector3& inOther) const {
         return MVector3(X - inOther.X, Y - inOther.Y, Z - inOther.Z);
     }
 
-    MVector3 operator-() {
+    MVector3 operator-() const {
         return MVector3(-X , -Y, -Z);
     }
 
