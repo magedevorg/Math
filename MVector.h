@@ -173,6 +173,11 @@ public:
         return *this;
     }
 
+    MVector3 operator*(MFLOAT inValue) const
+    {
+        return MVector3(X * inValue, Y * inValue, Z * inValue);
+    }
+
 public:
     MFLOAT X;
     MFLOAT Y;
