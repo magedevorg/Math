@@ -126,6 +126,10 @@ public:
         Z = inZ;
     }
 
+    static MFLOAT DotProduct(const MVector3& inA, const MVector3& inB)
+    {
+        return (inA.X * inB.X) + (inA.Y * inB.Y) + (inA.Z * inB.Z);
+    }
 
     // 외적
     static MVector3 CrossProduct(MVector3 inA, MVector3 inB)
