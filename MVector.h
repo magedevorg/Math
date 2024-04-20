@@ -110,6 +110,9 @@ class MVector3
 {
 public:
     static const MVector3 Zero;
+    static const MVector3 AxisX;
+    static const MVector3 AxisY;
+    static const MVector3 AxisZ;
 
 
 public:

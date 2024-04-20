@@ -21,6 +21,30 @@ public:
 	// 행렬을 얻는다
 	MMatrix4 ToMatrix() const;
 
+
+	void Set(MFLOAT inX, MFLOAT inY, MFLOAT inZ, MFLOAT inW)
+	{
+		X = inX;
+		Y = inY;
+		Z = inZ;
+		W = inW;
+	}
+
+
+	bool operator==(const MQuaternion& inOther) const
+	{
+		if ((inOther.X == X) && (inOther.Y == Y) && (inOther.Z == Z) && (inOther.W == W)) {
+			return true;
+		}
+
+		return false;
+	}
+
+	bool operator!=(const MQuaternion& inOther) const
+	{
+		return !(inOther == *this);
+	}
+
 public:
 	MFLOAT X;
 	MFLOAT Y;

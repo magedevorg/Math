@@ -8,103 +8,25 @@ class MTransform
 {
 public:
 	MTransform()
-		: Location(0,0,0)
-		, Scale(1, 1, 1)
-		, IsDirty(true)
+		: Scale(1, 1, 1)
 	{}
 
+	MTransform(const MVector3& inPosition, const MQuaternion& inRotation, const MVector3& inScale)
+		: Position(inPosition)
+		, Rotation(inRotation)
+		, Scale(inScale)
+	{}
 
-	//-----------------------------------------------------
-	// 위치
-	//-----------------------------------------------------
-	void SetLocation(const MVector3& inLocation) 
+public:
+	// Transform에 대한 행렬을 얻는다
+	MMatrix4 GetMatrix()
 	{
-		IsDirty = true;
-		Location = inLocation;
-	}
-
-	void SetLocation(MFLOAT inX, MFLOAT inY, MFLOAT inZ) 
-	{
-		IsDirty = true;
-		Location.Set(inX, inY, inZ);
-	}
-
-	const MVector3& GetLocation() const {
-		return Location;
-	}
-
-
-	//-----------------------------------------------------
-	// 회전 설정
-	//-----------------------------------------------------
-	void SetRotation(const MQuaternion& inRotation)
-	{
-		IsDirty = true;
-		Rotation = inRotation;
-	}
-
-	void SetRotationFromEuler(MFLOAT inX, MFLOAT inY, MFLOAT inZ)
-	{
-		IsDirty = true;
-		Rotation.FromEuler(inX, inY, inZ);
-	}
-
-	const MQuaternion& GetRotation() const {
-		return Rotation;
-	}
-	
-	//-----------------------------------------------------
-	// 스케일 설정
-	//-----------------------------------------------------
-	void SetScale(const MVector3& inScale)
-	{
-		IsDirty = true;
-		Scale = inScale;
-	}
-
-	void SetScale(MFLOAT inX, MFLOAT inY, MFLOAT inZ)
-	{
-		IsDirty = true;
-		Scale.Set(inX, inY, inZ);
-	}
-
-	const MVector3& GetScale() const {
-		return Scale;
-	}
-	
-
-	//-----------------------------------------------------
-	// 매트릭스 처리
-	//-----------------------------------------------------
-	const MMatrix4& GetMatrix()
-	{
-		if (true == IsDirty)
-		{
-			IsDirty = false;
-			UpdateMatrix();
-		}
-
-		return Matrix;
-	}
-
-
-	// 위치 변환
-	MVector3 TransformPosition(const MVector3 inPos)
-	{
-		const MMatrix4& matrix = GetMatrix();
-		return matrix * inPos;
-	}
-
-
-protected:
-	void UpdateMatrix()
-	{
-		Matrix.Identity();
+		MMatrix4 transformMatrix;
 
 		if (1.0f == Scale.X && 1.0f == Scale.Y && 1.0f == Scale.Z)
 		{
 			// 스케일이 1이라면 회전행렬로 설정
-			Matrix = Rotation.ToMatrix();
+			transformMatrix = Rotation.ToMatrix();
 		}
 		else
 		{
@@ -112,28 +34,19 @@ protected:
 			MMatrix4 scaleMatrix;
 			scaleMatrix.MakeScale(Scale);
 
-			Matrix = scaleMatrix * Rotation.ToMatrix();
+			transformMatrix = scaleMatrix * Rotation.ToMatrix();
 		}
 
 		// 위치 설정
-		Matrix.M[3][0] = Location.X;
-		Matrix.M[3][1] = Location.Y;
-		Matrix.M[3][2] = Location.Z;
+		transformMatrix.M[3][0] = Position.X;
+		transformMatrix.M[3][1] = Position.Y;
+		transformMatrix.M[3][2] = Position.Z;
+
+		return transformMatrix;
 	}
 
-protected:
-	// 위치
-	MVector3 Location;
-
-	// 회전
-	MQuaternion Rotation;
-
-	// 스케일
-	MVector3 Scale;
-
-	//-----------------------------------------------------
-	// 행렬 정보
-	//-----------------------------------------------------
-	MBOOL IsDirty;
-	MMatrix4 Matrix;
+public:
+	MVector3 Position;			// 위치
+	MQuaternion Rotation;		// 회전
+	MVector3 Scale;				// 스케일
 };
