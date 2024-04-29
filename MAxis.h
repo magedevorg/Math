@@ -5,6 +5,34 @@
 #include "MQuaternion.h"
 
 
+/*
+class MAxis2
+{
+public:
+	MAxis2()
+	{
+		Reset();
+	}
+
+public:
+
+	void Set(const MVector2& )
+
+	void Reset()
+	{
+		AxisList[0].Set(1.0f, 0.0f);
+		AxisList[1].Set(0.0f, 1.0f);
+	}
+
+
+protected:
+	std::array<MVector2, 2> AxisList;
+};
+*/
+
+
+
+
 class MAxis3
 {
 public:
