@@ -55,7 +55,7 @@ public:
 
 	void Rotation(const MMatrix4& inMatrix)
 	{
-		for (int32 i = 0; i < 3; ++i)
+		for (MINT32 i = 0; i < 3; ++i)
 		{
 			AxisList[i] = inMatrix * AxisList[i];
 			AxisList[i].Normalize();
