@@ -79,6 +79,10 @@ public:
         return MVector2(X / inValue, Y / inValue);
     }
 
+    MBOOL operator==(const MVector2& inOther) const {
+        return (X == inOther.X) && (Y == inOther.Y);
+    }
+
     //---------------------------------------------------------
     // static
     //---------------------------------------------------------
@@ -179,6 +183,10 @@ public:
     MVector3 operator*(MFLOAT inValue) const
     {
         return MVector3(X * inValue, Y * inValue, Z * inValue);
+    }
+
+    MBOOL operator==(const MVector3& inOther) const {
+        return (X == inOther.X) && (Y == inOther.Y) && (Z == inOther.Z);
     }
 
 public:
